@@ -12,6 +12,10 @@ wifi_uart_t wifi_uart_params;
 int8_t wifi_open()
 {
     wifi_uart_params.handle = AS1_Init(NULL);
+
+    /* Test UART interface */
+    wifi_send("AT\r\n", 4);
+    wifi_receive(rx_buffer, 10);
 }
 
 int8_t wifi_send(uint8_t* buffer, uint32_t size)

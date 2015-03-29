@@ -50,6 +50,7 @@
   </PATHS>
   <FILES>
     <GeneratedCs>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/AS1.c</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/Cpu.c</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/PE_LDD.c</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/Vectors.c</PathName>
@@ -58,6 +59,7 @@
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Sources/main.c</PathName>
     </GeneratedCs>
     <GeneratedHs>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/AS1.h</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/Cpu.h</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/IO_Map.h</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/PE_Const.h</PathName>

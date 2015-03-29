@@ -5,7 +5,7 @@
 **     Processor   : MKL25Z128VLK4
 **     Version     : Component 01.025, Driver 01.04, CPU db: 3.00.000
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2015-02-22, 18:42, # CodeGen: 0
+**     Date/Time   : 2015-02-22, 19:07, # CodeGen: 1
 **     Abstract    :
 **
 **     Settings    :
@@ -60,6 +60,7 @@
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
+#include "AS1.h"
 
 
 /*

@@ -97,7 +97,7 @@ void AS1_OnBlockReceived(LDD_TUserData *UserDataPtr)
 void AS1_OnBlockSent(LDD_TUserData *UserDataPtr)
 {
   /* Write your code here ... */
-    wifi_uart_params.is_send = TRUE;
+//    wifi_uart_params.is_send = TRUE;
 }
 
 /* END Events */

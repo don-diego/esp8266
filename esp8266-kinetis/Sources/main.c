@@ -44,17 +44,17 @@ int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */
 {
   /* Write your local variable definition here */
-    uint8_t rx_buffer[500]= {0};
 
     /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
   PE_low_level_init();
   /*** End of Processor Expert internal initialization.                    ***/
 
-  /* Write your code here */
-  /* For example: for(;;) { } */
   wifi_open();
-  wifi_join();
-  wifi_start_webserver();
+  esp8266_init();
+  wifi_network_connect();
+  wifi_socket_open();
+  wifi_send_data("25", 2);
+  wifi_socket_close();
 
   /*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/

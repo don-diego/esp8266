@@ -91,28 +91,51 @@ int8_t wifi_socket_close()
 	receive_at_cmd_response(rx_buffer, 19);
 }
 
-int8_t wifi_send_data(uint8_t *data, uint32_t data_size)
+int8_t wifi_send_data(uint8_t *data, uint32_t data_size, uint8_t *data2, uint32_t data2_size)
 {
 
 #define GET_HEADER "GET /update?key="
 
 	uint8_t data_buff[100] = "";
+	uint8_t data_pointer = 0;
 
 	memcpy(&data_buff[0], GET_HEADER, strlen(GET_HEADER));
+	data_pointer = strlen(GET_HEADER);
+
 	//Append API key
-	memcpy(&data_buff[strlen(GET_HEADER)], iot_server_api_write_key,
+	memcpy(&data_buff[data_pointer], iot_server_api_write_key,
 			strlen(iot_server_api_write_key));
-	data_buff[strlen(GET_HEADER)+strlen(iot_server_api_write_key)] = '&';
+	data_pointer += strlen(iot_server_api_write_key);
+	data_buff[data_pointer] = '&';
+	data_pointer += 1;
+
 	//Append API field
-	memcpy(&data_buff[strlen(GET_HEADER)+strlen(iot_server_api_write_key)+1],
-			iot_server_temperature_field, strlen(iot_server_temperature_field));
-	data_buff[strlen(GET_HEADER)+strlen(iot_server_api_write_key) + 1 +
-			  strlen(iot_server_temperature_field)] = '=';
+	memcpy(&data_buff[data_pointer], iot_server_temperature_field,
+			strlen(iot_server_temperature_field));
+	data_pointer += strlen(iot_server_temperature_field);
+	data_buff[data_pointer] = '=';
+	data_pointer += 1;
+
 	//Append data to be send
-	memcpy(&data_buff[strlen(GET_HEADER)+strlen(iot_server_api_write_key) + 1 +
-					  strlen(iot_server_temperature_field)+1], data, data_size);
-	memcpy(&data_buff[strlen(GET_HEADER)+strlen(iot_server_api_write_key) + 1 +
-					  strlen(iot_server_temperature_field)+1+data_size], "\r\n", 2);
+	memcpy(&data_buff[data_pointer], data, data_size);
+	data_pointer += data_size;
+
+	data_buff[data_pointer] = '&';
+	data_pointer += 1;
+
+	//Append API field
+	memcpy(&data_buff[data_pointer], iot_server_humidity_field,
+			strlen(iot_server_humidity_field));
+	data_pointer += strlen(iot_server_humidity_field);
+	data_buff[data_pointer] = '=';
+	data_pointer += 1;
+
+	//Append data to be send
+	memcpy(&data_buff[data_pointer], data2, data2_size);
+	data_pointer += data2_size;
+
+	//Append EOL
+	memcpy(&data_buff[data_pointer], "\r\n", 2);
 
 	//Send data
 	uint8_t at_cipsend[20] = "AT+CIPSEND=4,";

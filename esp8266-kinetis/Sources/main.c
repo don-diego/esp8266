@@ -32,6 +32,7 @@
 #include "Events.h"
 #include "AS1.h"
 #include "SI7005_I2C.h"
+#include "RTC1.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -45,8 +46,9 @@
 LDD_TDeviceData *si7005_device_data_p;
 
 uint32_t i = 0;
-uint8_t rH, temperat;
-uint8_t temperature[2] = {0};
+uint8_t rH_raw_value;
+uint32_t temperature_raw_value;
+uint8_t temperature[5] = {0, 0, '.', 0, 0};
 uint8_t humidity[2] = {0};
     /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
@@ -57,16 +59,19 @@ int main(void)
     /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
   PE_low_level_init();
   /*** End of Processor Expert internal initialization.                    ***/
-
-  si7005_open(&si7005_device_data_p);
+while(1)
+{
+  si7005_open( &si7005_device_data_p );
   for(i=0; i<100000; i++);
-  read_temperature(&temperat);
-  for(i=0; i<100000; i++);
-  read_rH( &rH );
-  temperature[0] = '0' + temperat/10;
-  temperature[1] = '0' + temperat%10;
-  humidity[0] = '0' + rH/10;
-  humidity[1] = '0' + rH%10;
+  read_temperature( &temperature_raw_value );
+  for(i=0; i<100000; i++); // wait some time
+  read_rH( &rH_raw_value );
+  temperature[0] = '0' + temperature_raw_value / 1000;
+  temperature[1] = '0' + (temperature_raw_value % 1000)/100;
+  temperature[3] = '0' + ((temperature_raw_value % 1000)%100)/10;
+  temperature[4] = '0' + ((temperature_raw_value % 1000)%100)%10;
+  humidity[0] = '0' + rH_raw_value / 10;
+  humidity[1] = '0' + rH_raw_value % 10;
 
 //  sprintf(sLCDBuffer,"%02i%02i", temperat, rH);
 
@@ -74,9 +79,10 @@ int main(void)
   esp8266_init();
   wifi_network_connect();
   wifi_socket_open();
-  wifi_send_data(temperature, 2, humidity, 2);
+  wifi_send_data(temperature, 5, humidity, 2);
   wifi_socket_close();
-
+  for(i=0; i<75000000; i++);
+}
   /*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
   #ifdef PEX_RTOS_START

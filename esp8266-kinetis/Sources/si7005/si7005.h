@@ -20,6 +20,6 @@ typedef enum {
 
 si7005_status_code_e si7005_open(LDD_TDeviceData **si7005_device_data_p);
 uint8_t read_rH(uint8_t *rH);
-uint8_t read_temperature(uint8_t *temperature);
+uint8_t read_temperature(uint32_t *temperature);
 
 #endif /* SI7005_H_ */

@@ -56,7 +56,7 @@ int8_t wifi_network_connect()
 			strlen("\"\r\n"));
 
 	send_at_cmd(command_buffer,strlen(command_buffer));
-    receive_at_cmd_response(rx_buffer, strlen(command_buffer) + 6);
+    receive_at_cmd_response(rx_buffer, strlen(command_buffer) + 5);
 
 //    int8_t at_cwjap[]= "AT+CWJAP?\r\n";
 //    send_at_cmd(at_cwjap, strlen(at_cwjap));

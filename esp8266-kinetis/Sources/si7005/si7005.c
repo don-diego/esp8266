@@ -46,7 +46,7 @@ uint8_t read_rH(uint8_t *rH)
 	return retcode;
 }
 
-uint8_t read_temperature(uint8_t *temperature)
+uint8_t read_temperature(uint32_t *temperature)
 {
 	uint16_t retcode = 0;
 	uint8_t tx_buffer[] = {0x03, 0x11};
@@ -60,13 +60,14 @@ uint8_t read_temperature(uint8_t *temperature)
 	/* Poll RDY (D0) in STATUS (register 0) until it is low (= 0) */
 	si7005_poll_rdy();
 
-	/*Read the upper and lower bytes of the RH value from DATAh and DATAl (registers 0x01 and 0x02),
-	respectively*/
+	/*Read the upper and lower bytes of the temperature value from
+	 * DATAh and DATAl (registers 0x01 and 0x02) */
 	si7005_read_data((uint8_t *)&rx_buffer, 2);
 
 	/*Convert the read value to temperature in Celcius*/
 	tempr |= ((rx_buffer[0]<<6) | (rx_buffer[1]>>2));
-	*temperature = (uint8_t)((tempr/32) - 50);
+	tempr &= 0x0000FFFF;
+	*temperature = ((((uint32_t)tempr*10000)/3200) - 5000) & 0x0000FFFF;
 	/*Apply temperature compensation and/or linearization*/
 	return retcode;
 }

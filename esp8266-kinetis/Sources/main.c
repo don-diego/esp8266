@@ -32,7 +32,6 @@
 #include "Events.h"
 #include "AS1.h"
 #include "SI7005_I2C.h"
-#include "RTC1.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"

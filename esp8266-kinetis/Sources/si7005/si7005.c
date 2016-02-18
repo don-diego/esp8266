@@ -26,7 +26,7 @@ uint8_t read_rH(uint8_t *rH)
     uint16_t retcode = 0;
 	uint8_t tx_buffer[] = {0x03, 0x01};
 	uint8_t rx_buffer[2] = {0};
-	uint16_t humidity = 0;
+	int32_t humidity = 0;
 
 	/* Start measurement
 	 * Set START (D0) in CONFIG to begin a new conversion */
@@ -41,8 +41,12 @@ uint8_t read_rH(uint8_t *rH)
 
 	/*Convert the RH value to %RH*/
 	humidity |= ((rx_buffer[0]<<4) | (rx_buffer[1]>>4));
-	*rH = (uint8_t)((humidity/16) - 24);
-	/*Apply temperature compensation and/or linearization*/
+	humidity = ((humidity/16) - 24);
+	/*Apply linearization*/
+	humidity = (humidity*100000) - (((humidity*humidity) * (-393)) + (humidity*40080) + (-478440));
+	humidity /= 100000;
+	/* TODO: Apply temperature compensation */
+	*rH = (uint8_t)humidity;
 	return retcode;
 }
 

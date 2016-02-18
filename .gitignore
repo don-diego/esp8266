@@ -1,4 +1,6 @@
 */esp8266-kinetis/Sources/config.h
+/esp8266-kinetis/Generated_Code/*
+
 # Object files
 *.o
 *.ko

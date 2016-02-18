@@ -36,6 +36,9 @@
 #include "IO_Map.h"
 #include "AS1.h"
 #include "SI7005_I2C.h"
+#include "LED_Red.h"
+#include "LED_Green.h"
+#include "LED_Blue.h"
 
 #ifdef __cplusplus
 extern "C" {

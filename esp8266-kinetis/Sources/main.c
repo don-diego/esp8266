@@ -32,6 +32,9 @@
 #include "Events.h"
 #include "AS1.h"
 #include "SI7005_I2C.h"
+#include "LED_Red.h"
+#include "LED_Green.h"
+#include "LED_Blue.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -60,6 +63,7 @@ int main(void)
   /*** End of Processor Expert internal initialization.                    ***/
 while(1)
 {
+  LED_Blue_ClrVal(NULL);
   si7005_open( &si7005_device_data_p );
   for(i=0; i<100000; i++);
   read_temperature( &temperature_raw_value );
@@ -71,16 +75,18 @@ while(1)
   temperature[4] = '0' + ((temperature_raw_value % 1000)%100)%10;
   humidity[0] = '0' + rH_raw_value / 10;
   humidity[1] = '0' + rH_raw_value % 10;
-
-//  sprintf(sLCDBuffer,"%02i%02i", temperat, rH);
-
+	LED_Blue_SetVal(NULL);
+  LED_Red_ClrVal(NULL);
   wifi_open();
   esp8266_init();
   wifi_network_connect();
   wifi_socket_open();
   wifi_send_data(temperature, 5, humidity, 2);
   wifi_socket_close();
+  LED_Red_SetVal(NULL);
+  LED_Green_ClrVal(NULL);
   for(i=0; i<75000000; i++);
+  LED_Green_SetVal(NULL);
 }
   /*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/

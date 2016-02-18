@@ -46,27 +46,42 @@
       <Path>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/</Path>
       <Path>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Project_Settings/Startup_Code/</Path>
       <Path>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Sources/</Path>
+      <Path>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Sources/si7005/</Path>
     </SourceCodePaths>
   </PATHS>
   <FILES>
     <GeneratedCs>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/AS1.c</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/Cpu.c</PathName>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/LED_Blue.c</PathName>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/LED_Green.c</PathName>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/LED_Red.c</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/PE_LDD.c</PathName>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/SI7005_I2C.c</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/Vectors.c</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Project_Settings/Startup_Code/startup.c</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Sources/Events.c</PathName>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Sources/exit.c</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Sources/main.c</PathName>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Sources/si7005/si7005.c</PathName>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Sources/wifi.c</PathName>
     </GeneratedCs>
     <GeneratedHs>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/AS1.h</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/Cpu.h</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/IO_Map.h</PathName>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/LED_Blue.h</PathName>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/LED_Green.h</PathName>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/LED_Red.h</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/PE_Const.h</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/PE_Error.h</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/PE_LDD.h</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/PE_Types.h</PathName>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Generated_Code/SI7005_I2C.h</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Sources/Events.h</PathName>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Sources/config.h</PathName>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Sources/si7005/si7005.h</PathName>
+      <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Sources/wifi.h</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Static_Code/IO_Map/MKL25Z4.h</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Static_Code/PDD/ADC_PDD.h</PathName>
       <PathName>/home/adam/Embedded/github/KL25Z_ESP8266/esp8266-kinetis/Static_Code/PDD/CMP_PDD.h</PathName>

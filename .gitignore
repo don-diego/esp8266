@@ -1,5 +1,9 @@
 */esp8266-kinetis/Sources/config.h
 /esp8266-kinetis/Generated_Code/*
+esp8266-kinetis/.esp8266-kinetis.g_c
+esp8266-kinetis/.esp8266-kinetis.g_x
+esp8266-kinetis/Documentation/*
+esp8266-kinetis/.settings/language.settings.xml
 
 # Object files
 *.o

@@ -17,7 +17,7 @@ uint8_t rx_buffer[500]= {0};
  */
 int8_t wifi_open()
 {
-    wifi_uart_params.handle = AS1_Init(NULL);
+	AS1_Init();
 
     /* Test UART interface */
     send_at_cmd("AT\r\n", 4);
@@ -156,14 +156,15 @@ int8_t wifi_send_data(uint8_t *data, uint32_t data_size, uint8_t *data2, uint32_
 }
 int8_t send_at_cmd(uint8_t* buffer, uint32_t size)
 {
-    AS1_SendBlock(wifi_uart_params.handle, buffer, size);
+	uint8_t buff[1];
+    AS1_SendBlock(buffer, size, buff);
 //    while(!AS1_GetTxCompleteStatus(wifi_uart_params.handle));
 }
 
 int8_t receive_at_cmd_response(uint8_t* buffer, uint32_t size)
 {
-    AS1_ReceiveBlock(wifi_uart_params.handle, buffer, size);
 	while(wifi_uart_params.is_received==FALSE);
 	wifi_uart_params.is_received=FALSE;
+	memset(rx_buffer, 0x00, sizeof(rx_buffer)); // Clear receive buffer
 }
 

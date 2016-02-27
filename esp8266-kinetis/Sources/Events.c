@@ -38,6 +38,7 @@ extern "C" {
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
 extern wifi_uart_t wifi_uart_params;
+extern uint8_t rx_buffer[];
 /*
 ** ===================================================================
 **     Event       :  Cpu_OnNMIINT (module Events)
@@ -75,29 +76,6 @@ void Cpu_OnNMIINT(void)
 void AS1_OnBlockReceived(LDD_TUserData *UserDataPtr)
 {
   /* Write your code here ... */
-    wifi_uart_params.is_received = TRUE;
-}
-
-/*
-** ===================================================================
-**     Event       :  AS1_OnBlockSent (module Events)
-**
-**     Component   :  AS1 [Serial_LDD]
-*/
-/*!
-**     @brief
-**         This event is called after the last character from the
-**         output buffer is moved to the transmitter. 
-**     @param
-**         UserDataPtr     - Pointer to the user or
-**                           RTOS specific data. This pointer is passed
-**                           as the parameter of Init method.
-*/
-/* ===================================================================*/
-void AS1_OnBlockSent(LDD_TUserData *UserDataPtr)
-{
-  /* Write your code here ... */
-//    wifi_uart_params.is_send = TRUE;
 }
 
 /*
@@ -146,6 +124,105 @@ extern volatile bool si7005_data_receive_flag;
 void SI7005_I2C_OnMasterBlockReceived(LDD_TUserData *UserDataPtr)
 {
 	si7005_data_receive_flag = TRUE;
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnError (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called when a channel error (not the error
+**         returned by a given method) occurs. The errors can be read
+**         using <GetError> method.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnError(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnRxChar (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called after a correct character is received.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled and either the <Receiver>
+**         property is enabled or the <SCI output mode> property (if
+**         supported) is set to Single-wire mode.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnRxChar(void)
+{
+	static uint32_t i;
+	AS1_RecvChar(&rx_buffer[i]);
+	i++;
+	if ((strstr(rx_buffer, "\r\nOK\r\n") != 0) || (strstr(rx_buffer, "\r\nERROR\r\n") != 0) ||
+			(strstr(rx_buffer, "busy") != 0) || (strstr(rx_buffer, "> ") != 0))
+	{
+		wifi_uart_params.is_received = TRUE;
+		i = 0;
+	}
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnTxChar (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called after a character is transmitted.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnTxChar(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnFullRxBuf (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called when the input buffer is full;
+**         i.e. after reception of the last character 
+**         that was successfully placed into input buffer.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnFullRxBuf(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnFreeTxBuf (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called after the last character in output
+**         buffer is transmitted.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnFreeTxBuf(void)
+{
+  /* Write your code here ... */
 }
 
 /* END Events */

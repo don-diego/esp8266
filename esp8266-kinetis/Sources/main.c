@@ -31,6 +31,7 @@
 #include "Cpu.h"
 #include "Events.h"
 #include "AS1.h"
+#include "ASerialLdd1.h"
 #include "SI7005_I2C.h"
 #include "LED_Red.h"
 #include "LED_Green.h"

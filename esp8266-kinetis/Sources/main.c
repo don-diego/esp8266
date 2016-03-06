@@ -49,6 +49,7 @@
 LDD_TDeviceData *si7005_device_data_p;
 
 uint32_t i = 0;
+uint8_t rssi_str[4];
 uint8_t rH_raw_value;
 uint32_t temperature_raw_value;
 uint8_t temperature[5] = {0, 0, '.', 0, 0};
@@ -76,17 +77,17 @@ while(1)
   temperature[4] = '0' + ((temperature_raw_value % 1000)%100)%10;
   humidity[0] = '0' + rH_raw_value / 10;
   humidity[1] = '0' + rH_raw_value % 10;
-	LED_Blue_SetVal(NULL);
+  LED_Blue_SetVal(NULL);
   LED_Red_ClrVal(NULL);
   wifi_open();
   esp8266_init();
   wifi_network_connect();
   wifi_socket_open();
-  wifi_send_data(temperature, 5, humidity, 2);
+  wifi_send_data(temperature, 5, humidity, 2, rssi_str, 3);
   wifi_socket_close();
   LED_Red_SetVal(NULL);
   LED_Green_ClrVal(NULL);
-  for(i=0; i<75000000; i++);
+  for(i=0; i<150000000; i++);
   LED_Green_SetVal(NULL);
 }
   /*** Don't write any code pass this line, or it will be deleted during code generation. ***/

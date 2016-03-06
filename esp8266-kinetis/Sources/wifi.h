@@ -36,6 +36,6 @@ int8_t send_at_cmd(uint8_t* buffer, uint32_t size);
 int8_t receive_at_cmd_response(uint8_t* buffer, uint32_t size);
 int8_t wifi_socket_open();
 int8_t wifi_socket_close();
-int8_t wifi_send_data(uint8_t *data, uint32_t data_size, uint8_t *data2, uint32_t data2_size);
+int8_t wifi_send_data(uint8_t *data, uint32_t data_size, uint8_t *data2, uint32_t data2_size, uint8_t *data3, uint32_t data3_size);
 
 #endif /* WIFI_H_ */

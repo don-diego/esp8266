@@ -165,12 +165,19 @@ void AS1_OnRxChar(void)
 {
 	static uint32_t i;
 	AS1_RecvChar(&rx_buffer[i]);
-	i++;
-	if ((strstr(rx_buffer, "\r\nOK\r\n") != 0) || (strstr(rx_buffer, "\r\nERROR\r\n") != 0) ||
-			(strstr(rx_buffer, "busy") != 0) || (strstr(rx_buffer, "> ") != 0))
+	if ((strstr(rx_buffer, "\r\nOK\r\n") != 0) ||
+			(strstr(rx_buffer, "\r\nERROR\r\n") != 0) ||
+			(strstr(rx_buffer, "> ") != 0) ||
+			(strstr(rx_buffer, "\r\nALREAY CONNECT\r\n") != 0) ||
+			(strstr(rx_buffer, "\r\nSEND OK\r\n") != 0)||
+			(strstr(rx_buffer, "\r\nlink is not\r\n") != 0))
 	{
 		wifi_uart_params.is_received = TRUE;
 		i = 0;
+	}
+	else
+	{
+		i++;
 	}
 }
 

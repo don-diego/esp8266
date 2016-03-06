@@ -10,8 +10,8 @@
 #include "stdio.h"
 #include "config.h"
 wifi_uart_t wifi_uart_params;
-uint8_t rx_buffer[500]= {0};
-
+uint8_t rx_buffer[1024]= {0};
+extern uint8_t rssi_str[];
 /**
  * @brief Configure physical interface
  */
@@ -58,6 +58,16 @@ int8_t wifi_network_connect()
 	send_at_cmd(command_buffer,strlen(command_buffer));
     receive_at_cmd_response(rx_buffer, strlen(command_buffer) + 5);
 
+    /* Get WiFi networks list */
+	send_at_cmd("AT+CWLAP\r\n",strlen("AT+CWLAP\r\n"));
+    receive_at_cmd_response(0, 0);
+
+    uint8_t *rssi_pointer;
+    if (rssi_pointer = strstr(rx_buffer, ACCESS_POINT_NAME))
+    {
+    	memcpy(rssi_str, &rssi_pointer[strlen(ACCESS_POINT_NAME)+2],3); //Assume RSSI value has 3 chars
+    }
+
 //    int8_t at_cwjap[]= "AT+CWJAP?\r\n";
 //    send_at_cmd(at_cwjap, strlen(at_cwjap));
 //    receive_at_cmd_response(rx_buffer, 38);
@@ -91,7 +101,7 @@ int8_t wifi_socket_close()
 	receive_at_cmd_response(rx_buffer, 19);
 }
 
-int8_t wifi_send_data(uint8_t *data, uint32_t data_size, uint8_t *data2, uint32_t data2_size)
+int8_t wifi_send_data(uint8_t *data, uint32_t data_size, uint8_t *data2, uint32_t data2_size, uint8_t *data3, uint32_t data3_size)
 {
 
 #define GET_HEADER "GET /update?key="
@@ -106,10 +116,10 @@ int8_t wifi_send_data(uint8_t *data, uint32_t data_size, uint8_t *data2, uint32_
 	memcpy(&data_buff[data_pointer], iot_server_api_write_key,
 			strlen(iot_server_api_write_key));
 	data_pointer += strlen(iot_server_api_write_key);
+	//Append API field1
 	data_buff[data_pointer] = '&';
 	data_pointer += 1;
 
-	//Append API field
 	memcpy(&data_buff[data_pointer], iot_server_temperature_field,
 			strlen(iot_server_temperature_field));
 	data_pointer += strlen(iot_server_temperature_field);
@@ -120,10 +130,10 @@ int8_t wifi_send_data(uint8_t *data, uint32_t data_size, uint8_t *data2, uint32_
 	memcpy(&data_buff[data_pointer], data, data_size);
 	data_pointer += data_size;
 
+	//Append API field2
 	data_buff[data_pointer] = '&';
 	data_pointer += 1;
 
-	//Append API field
 	memcpy(&data_buff[data_pointer], iot_server_humidity_field,
 			strlen(iot_server_humidity_field));
 	data_pointer += strlen(iot_server_humidity_field);
@@ -133,6 +143,20 @@ int8_t wifi_send_data(uint8_t *data, uint32_t data_size, uint8_t *data2, uint32_
 	//Append data to be send
 	memcpy(&data_buff[data_pointer], data2, data2_size);
 	data_pointer += data2_size;
+
+	//Append API field3
+	data_buff[data_pointer] = '&';
+	data_pointer += 1;
+
+	memcpy(&data_buff[data_pointer], iot_server_wifi_rssi_field,
+			strlen(iot_server_wifi_rssi_field));
+	data_pointer += strlen(iot_server_wifi_rssi_field);
+	data_buff[data_pointer] = '=';
+	data_pointer += 1;
+
+	//Append data to be send
+	memcpy(&data_buff[data_pointer], data3, data3_size);
+	data_pointer += data3_size;
 
 	//Append EOL
 	memcpy(&data_buff[data_pointer], "\r\n", 2);
@@ -157,6 +181,8 @@ int8_t wifi_send_data(uint8_t *data, uint32_t data_size, uint8_t *data2, uint32_
 int8_t send_at_cmd(uint8_t* buffer, uint32_t size)
 {
 	uint8_t buff[1];
+
+	memset(rx_buffer, 0x00, sizeof(rx_buffer)); // Clear receive buffer
     AS1_SendBlock(buffer, size, buff);
 //    while(!AS1_GetTxCompleteStatus(wifi_uart_params.handle));
 }
@@ -165,6 +191,5 @@ int8_t receive_at_cmd_response(uint8_t* buffer, uint32_t size)
 {
 	while(wifi_uart_params.is_received==FALSE);
 	wifi_uart_params.is_received=FALSE;
-	memset(rx_buffer, 0x00, sizeof(rx_buffer)); // Clear receive buffer
 }
 

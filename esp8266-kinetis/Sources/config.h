@@ -17,5 +17,6 @@
 #define iot_server_api_write_key	"YOURAPIKEYXXXXXX"
 #define iot_server_temperature_field	"field1"
 #define iot_server_humidity_field	"field2"
+#define iot_server_wifi_rssi_field	"field3"
 
 #endif /* SOURCES_CONFIG_H_ */
